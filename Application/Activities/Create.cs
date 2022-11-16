@@ -29,18 +29,17 @@ namespace Application.Activities
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
-
             public Handler(DataContext context, IUserAccessor userAccessor)
             {
-                _context = context;
                 _userAccessor = userAccessor;
+                _context = context;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => 
                     x.UserName == _userAccessor.GetUsername());
-                
+
                 var attendee = new ActivityAttendee
                 {
                     AppUser = user,
